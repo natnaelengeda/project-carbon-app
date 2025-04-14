@@ -21,7 +21,7 @@ import android.content.BroadcastReceiver;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String URL = "http://10.40.0.200:1029/carbonfootprint/answers?room=101";
+    private static final String URL = "http://192.168.1.1:4040/carbonfootprint/answers?room=101";
 
     private MyPresentation myPresentation;
     private DisplayManager displayManager;

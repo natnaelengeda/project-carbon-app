@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class MyPresentation extends Presentation {
 
     private static final String TAG = "MyPresentation";
-    private static final String URL = "http://10.40.0.200:1029/carbonfootprint/questions?room=101";
+    private static final String URL = "http://192.168.1.1:4040/carbonfootprint/questions?room=101";
 
     private FrameLayout rotatedContainer;
     private WebView presentationWebView;
@@ -76,17 +76,34 @@ public class MyPresentation extends Presentation {
     }
 
     private void setupInitialLayout() {
-        rotatedContainer.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-            Point screenSize = new Point();
-            if (wm != null) {
-                wm.getDefaultDisplay().getRealSize(screenSize);
+//        rotatedContainer.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+//            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+//            Point screenSize = new Point();
+//            if (wm != null) {
+//                wm.getDefaultDisplay().getRealSize(screenSize);
+//            }
+//
+//            int screenWidth = screenSize.x;
+//            int screenHeight = screenSize.y;
+//
+//            applyRotation(screenWidth, screenHeight);
+//        });
+        rotatedContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                rotatedContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                Point screenSize = new Point();
+                if (wm != null) {
+                    wm.getDefaultDisplay().getRealSize(screenSize);
+                }
+
+                int screenWidth = screenSize.x;
+                int screenHeight = screenSize.y;
+
+                applyRotation(screenWidth, screenHeight);
             }
-
-            int screenWidth = screenSize.x;
-            int screenHeight = screenSize.y;
-
-            applyRotation(screenWidth, screenHeight);
         });
     }
 
